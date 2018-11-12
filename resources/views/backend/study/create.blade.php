@@ -63,9 +63,21 @@
                     <div class="form-group row">
                         <div class="section_1">
                             <label class="col-md-2 col-form-label">Section One</label>
-                            <div class="col-md-10">
+                            <div class="col-md-2">
                                 <input class="form-control" placeholder="Section Of Part" name="section[]" type="number">
                             </div>
+
+                            <label class="col-md-1 col-form-label">Score</label>
+                            <div class="col-md-2">
+                                <input class="form-control" placeholder="Section Of Part" name="section_score[]" type="number">
+                            </div>
+
+                            <label class="col-md-2 col-form-label">Full Marks</label>
+                            <div class="col-md-3">
+                                <input class="form-control" placeholder="Section Of Part" name="section_fullmarks[]" type="number">
+                            </div>
+
+
                         </div>
                         <div class="section_2">
                             <label class="col-md-2 col-form-label">Section Two</label>
