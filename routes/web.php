@@ -13,4 +13,27 @@
 
 Route::get('/', 'HomeController@index');
 Route::get('chart', 'HomeController@chart');
-Route::get('fxcosta', 'HomeController@fxcostaChart');
+Route::get('login', function () {
+    return redirect('/');
+});
+
+Route::get('login/xion', 'Auth\LoginController@showLoginForm');
+Route::post('login', 'Auth\LoginController@login')->name('login');
+
+
+Route::group(['middleware' => 'auth'], function() {
+
+    Route::get('home', 'DashboardController@index');
+    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+
+
+    Route::resources([
+        'study' => 'StudyController',
+        'details' => 'DetailsController',
+        'exam' => 'ExamController',
+    ]);
+
+});
+
+

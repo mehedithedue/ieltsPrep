@@ -6,11 +6,17 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(){
-    	return view('pages.welcome');
+
+    public function index()
+    {
+        return view('pages.welcome');
     }
-    public function chart(){
-    	return view('pages.chart');
+
+
+
+    public function chart()
+    {
+        return view('pages.chart');
     }
 
 }
