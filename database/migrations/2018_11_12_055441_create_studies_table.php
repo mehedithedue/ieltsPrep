@@ -22,7 +22,7 @@ class CreateStudiesTable extends Migration
             $table->integer('score');
             $table->integer('full_marks');
             $table->unsignedDecimal('band', 2, 1);
-            $table->text('comments');
+            $table->text('comments')->nullable();
             $table->date('completed_at');
             $table->timestamps();
         });

@@ -14,8 +14,13 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div style="width:70%;">
-                <canvas id="myChart"></canvas>
+            <hr>
+
+            <div class="col-md-11 offset-md-1 text-center">
+                <h3>
+                    All Part Comparison
+                </h3>
+                <canvas id="all_part_comparison"></canvas>
             </div>
         </div>
         <div class="col-md-12">
@@ -32,49 +37,19 @@
     <script src="{{asset('js/chart_js_utils.js')}}"></script>
     <script>
 
-        var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-        var chartData = {
-            labels: MONTHS,
-            datasets: [
-                {
-                    fill: true,
-                    label: 'Dataset 1',
-                    backgroundColor: backgroundColor.red,
-                    borderColor: chartColors.red,
-                    borderWidth: 1,
-                    data: [10, 25, 35, 21, 45, 36, 25, 14, 45, 58, 40]
-                },
-                {
-                    fill: true,
-                    label: 'Dataset 2',
-                    backgroundColor: backgroundColor.blue,
-                    borderColor: chartColors.blue,
-                    borderWidth: 1,
-                    data: [20, 35, 35, 41, 40, 16, 29, 54, 59, 18, 35]
-                }
-            ]
-        };
+        $(document).ready(function () {
 
         var chartConfig = {
             type: 'line',
-            data: chartData,
+            data: {},
             options: {
                 responsive: true,
                 legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Chart.js '
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
+                    position: 'bottom',
                 },
                 hover: {
-                    mode: 'nearest',
-                    intersect: true
+                    mode: 'index'
                 },
                 scales: {
                     xAxes: [{
@@ -91,9 +66,86 @@
                             labelString: 'Value'
                         }
                     }]
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Line Chart - Different point sizes'
                 }
             }
         };
+
+
+
+            chartDrawn(chartConfig);
+        });
+
+        function chartDrawn(chartConfig){
+            $.ajax({
+                method: "POST",
+                url: "{{url('chart-data')}}",
+                data: { term: "{{$request->term}}", day: "{{$request->day}}" },
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+
+            })
+                .done(function( response ) {
+                    var labels = response.label;
+
+                    var AllPartCompChartData = {
+                        labels: labels,
+                        datasets: [
+                            {
+                                ill: false,
+                                label: 'Dataset 1',
+                                backgroundColor: backgroundColor.red,
+                                borderColor: chartColors.red,
+                                borderWidth: 1,
+                                borderDash: [5, 5],
+                                data: [10, 25, 35, 21, 45, 36, 25, 14, 45, 58, 40]
+                            },
+                            {
+                                fill: true,
+                                label: 'Dataset 2',
+                                backgroundColor: backgroundColor.blue,
+                                borderColor: chartColors.blue,
+                                borderWidth: 1,
+                                data: [20, 35, 35, 41, 40, 16, 29, 54, 59, 18, 35]
+                            },
+                            {
+                                fill: true,
+                                label: 'Dataset 3',
+                                backgroundColor: backgroundColor.yellow,
+                                borderColor: chartColors.yellow,
+                                borderWidth: 1,
+                                data: [10, 25, 35, 21, 45, 16, 25, 14, 45, 28, 40]
+                            },
+                            {
+                                fill: true,
+                                label: 'Dataset 4',
+                                backgroundColor: backgroundColor.green,
+                                borderColor: chartColors.green,
+                                borderWidth: 1,
+                                data: [20, 65, 35, 41, 40, 16, 59, 54, 59, 18, 35]
+                            }
+                        ]
+                    };
+
+                    chartConfig.data = AllPartCompChartData;
+                    chartConfig.options.title.text = "All Part Comparison ";
+
+                    var ctx1 = document.getElementById("all_part_comparison").getContext('2d');
+                    var allPartComparison = new Chart(ctx1, chartConfig);
+                })
+                .fail(function( jqXHR, textStatus ) {
+                    console.log( "Request failed: " + textStatus );
+                });
+        }
+
+
+
+
+
 
 
         var config = {
@@ -154,8 +206,6 @@
             var ctx = document.getElementById('canvas').getContext('2d');
             window.myLine = new Chart(ctx, config);
 
-            var ctx1 = document.getElementById("myChart").getContext('2d');
-            var chartDrawn = new Chart(ctx1, chartConfig);
         }
 
     </script>

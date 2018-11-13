@@ -13,6 +13,9 @@
 
 Route::get('/', 'HomeController@index');
 Route::get('chart', 'HomeController@chart');
+
+Route::post('chart-data', 'AjaxRequestController@chartjsRepsonse');
+
 Route::get('login', function () {
     return redirect('/');
 });

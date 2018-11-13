@@ -3,7 +3,7 @@
     <style>
         html, body {
             background-color: #fff;
-            color: #636b6f;
+            color: #1e2327;
             font-family: 'Raleway', sans-serif;
             font-weight: 100;
             height: 100vh;
@@ -35,7 +35,18 @@
         }
 
         .title {
-            font-size: 84px;
+            font-size: 44px;
+        }
+
+        .today {
+            font-size: 16px;
+            font-weight: bold;
+            color: #282828;
+        }
+        .yesterday {
+            font-size: 14px;
+            font-weight: bold;
+            color: #404040;
         }
 
         .links > a {
@@ -52,22 +63,50 @@
             margin-bottom: 30px;
         }
     </style>
-    @endsection
-    @section('content')
-        <div class="col-md-12">
-            <div class="flex-center position-ref full-height">
-                <div class="content">
-                    <div class="title m-b-md">
-                        Laravel
-                    </div>
+@endsection
+@section('content')
+    <div class="col-md-12">
+        <div class="flex-center position-ref full-height">
+            <div class="content">
+                <div class="title m-b-md">
+                    IELTS PREP
+                </div>
 
-                    <div class="links">
-                        <a href="https://laravel.com/docs">Documentation</a>
-                        <a href="https://laracasts.com">Laracasts</a>
-                    </div>
+                <div class="yesterday m-b-md">
+
+                    @foreach($yesterdayStudies as $yesterdayStudy)
+
+                        Yesterday Study : {{$yesterdayStudy->practise_book}} {{$yesterdayStudy->book_details}}. Test No : {{$yesterdayStudy->test_no}},  Part : <span style="font-size: 13px;" class="badge badge-pill badge-warning ">{{\App\Model\Part::getPartName(($yesterdayStudy->part_no))}}</span><br>
+
+
+                        Score : <span class="badge badge-primary">{{$yesterdayStudy->score}}</span> in Total : {{$yesterdayStudy->full_marks}}
+                        , Band : <span class="badge badge-success">{{$yesterdayStudy->band}}</span>
+                        {{$yesterdayStudy->comments}}
+                        <hr>
+                    @endforeach
+                </div>
+
+                <div class="today m-b-md">
+
+                    @foreach($todayStudies as $todayStudy)
+
+                            Todays Study : {{$todayStudy->practise_book}} {{$todayStudy->book_details}}. Test No : {{$todayStudy->test_no}},  Part : <span style="font-size: 14px;" class="badge badge-pill badge-warning ">{{\App\Model\Part::getPartName(($todayStudy->part_no))}}</span><br>
+
+
+                            Score : <span class="badge badge-primary">{{$todayStudy->score}}</span> in Total : {{$todayStudy->full_marks}}
+                            , Band : <span class="badge badge-success">{{$todayStudy->band}}</span>
+                            {{$todayStudy->comments}}
+                        <hr>
+                    @endforeach
+                </div>
+
+
+                <div class="links">
+                    <a href="{{url('chart?term=monthly&day='.date('Y-m-d'))}}">View Monthly Report</a>
                 </div>
             </div>
         </div>
+    </div>
 
-    @endsection
+@endsection
 
