@@ -3,6 +3,8 @@
 namespace App\Utility;
 
 
+use App\Model\Part;
+
 class Utility
 {
 
@@ -37,5 +39,33 @@ class Utility
 
         return $band;
     }
+
+    public static function listening(){
+
+        $listening =  Part::where('name', 'Listening')->first();
+        return isset($listening->id) ? $listening->id : 0;
+    }
+
+
+    public static function writing(){
+
+        $writing =  Part::where('name', 'Writing')->first();
+        return isset($writing->id) ? $writing->id : 0;
+    }
+
+
+    public static function reading(){
+
+        $reading =  Part::where('name', 'Reading')->first();
+        return isset($reading->id) ? $reading->id : 0;
+    }
+
+
+    public static function speaking(){
+
+        $speaking =  Part::where('name', 'Speaking')->first();
+        return isset($speaking->id) ? $speaking->id : 0;
+    }
+
 
 }
