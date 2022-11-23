@@ -2,7 +2,7 @@
 
 ## About Project
 
-This project to check and track my IELTS preparation.
+This project to check and track my Study preparation.
 
 Have to entry every days task and end of the week it shows the progress of preparation.
 
