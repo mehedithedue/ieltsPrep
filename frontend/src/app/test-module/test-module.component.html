@@ -1,0 +1,101 @@
+<div class="min-h-screen bg-gray-50 py-8">
+  <!-- Header -->
+  <div class="container mx-auto px-4 mb-8">
+    <div class="bg-white rounded-xl shadow-lg p-6 flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">{{ currentSection.name }} Test</h1>
+        <p class="text-gray-600 mt-2">Answer Sheet</p>
+      </div>
+      <div class="text-center">
+        <div class="text-2xl font-bold text-blue-600">Score</div>
+        <div class="text-4xl font-bold">{{ totalCorrect }}/{{ totalQuestions }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container mx-auto px-4">
+    <!-- Section Tabs -->
+    <div class="flex space-x-4 mb-8">
+      <button 
+        *ngFor="let section of sections"
+        (click)="switchSection(section.name)"
+        class="px-6 py-3 rounded-lg font-semibold transition-all duration-200"
+        [class.bg-blue-600]="currentSection.name === section.name"
+        [class.text-white]="currentSection.name === section.name"
+        [class.bg-white]="currentSection.name !== section.name"
+        [class.text-gray-700]="currentSection.name !== section.name"
+        [class.shadow-lg]="currentSection.name === section.name"
+      >
+        {{ section.name }}
+      </button>
+    </div>
+
+    <!-- Parts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div *ngFor="let part of currentSection.parts" 
+           class="bg-white rounded-xl shadow-lg p-6 transition-all duration-200 hover:shadow-xl">
+        <div class="border-b border-gray-200 pb-4 mb-4">
+          <h2 class="text-xl font-bold text-gray-800">Part {{ part.number }}</h2>
+          <p class="text-gray-600 text-sm mt-1">{{ part.questions.length }} questions</p>
+        </div>
+
+        <div class="space-y-4">
+          <div *ngFor="let question of part.questions" 
+               class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+            <!-- Question Number -->
+            <div class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full font-semibold text-gray-700">
+              {{ question.number }}
+            </div>
+
+            <!-- Answer Select -->
+            <select [(ngModel)]="question.answer"
+                    class="flex-grow bg-white border border-gray-300 rounded-lg py-2 px-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+              <option value="">Select</option>
+              <option *ngFor="let opt of options" [value]="opt">{{ opt }}</option>
+            </select>
+
+            <!-- Correct/Incorrect Toggle -->
+            <button (click)="toggleCorrect(question)"
+                    class="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                    [class.bg-green-100]="question.isCorrect"
+                    [class.bg-red-100]="!question.isCorrect"
+                    [class.hover:bg-green-200]="question.isCorrect"
+                    [class.hover:bg-red-200]="!question.isCorrect">
+              <span [class.text-green-600]="question.isCorrect"
+                    [class.text-red-600]="!question.isCorrect">
+                {{ question.isCorrect ? '✓' : '✗' }}
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Stats -->
+  <div class="container mx-auto px-4 mt-8">
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="text-center">
+          <div class="text-gray-600">Total Questions</div>
+          <div class="text-2xl font-bold text-gray-800">{{ totalQuestions }}</div>
+        </div>
+        <div class="text-center">
+          <div class="text-gray-600">Correct Answers</div>
+          <div class="text-2xl font-bold text-green-600">{{ totalCorrect }}</div>
+        </div>
+        <div class="text-center">
+          <div class="text-gray-600">Incorrect Answers</div>
+          <div class="text-2xl font-bold text-red-600">{{ totalQuestions - totalCorrect }}</div>
+        </div>
+        <div class="text-center">
+          <div class="text-gray-600">Score Percentage</div>
+          <div class="text-2xl font-bold text-blue-600">
+            {{ (totalCorrect / totalQuestions * 100).toFixed(1) }}%
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

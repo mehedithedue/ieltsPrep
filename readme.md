@@ -1,5 +1,5 @@
 ## Project Overview
-Thisi is due to personal IELTS / Celpip tracking project consists of a **Laravel ** and an **Angular **, containerized using Docker and managed with Docker Compose.
+This project consists of a **Laravel Backend** and an **Angular Frontend**, containerized using Docker and managed with Docker Compose.
 
 ## Prerequisites
 - Docker & Docker Compose installed
@@ -9,8 +9,8 @@ Thisi is due to personal IELTS / Celpip tracking project consists of a **Laravel
 
 ### 1. Clone the Repository
 ```sh
- git clone https://github.com/mehedithedue/ieltsPrep.git
- cd ieltsPrep
+ git clone https://your-repo-url.git
+ cd your-project-directory
 ```
 
 ### 2. Environment Setup
@@ -32,7 +32,7 @@ This will start the Laravel backend, Angular frontend, and a MySQL database cont
 
 ### 4. Migrate Database (Laravel)
 ```sh
-docker exec -it backend php artisan migrate --seed
+docker exec -it backend-container-name php artisan migrate --seed
 ```
 
 ### 5. Access the Application
@@ -53,15 +53,4 @@ docker-compose logs -f backend
 ```sh
 docker-compose logs -f frontend
 ```
-
----
-
-# docker-compose.yml
-
-```yaml
-version: '3.8'
-
-
-```
-
 
